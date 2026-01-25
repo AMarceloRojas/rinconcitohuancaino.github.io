@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel de Administración - Menú</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* PANTALLA DE LOGIN */
+    .login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: rgba(0,0,0,0.4);
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .login-box h1 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: #f59e0b;
+    }
+
+    .login-box p {
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 32px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1rem;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .login-input:focus {
+      outline: none;
+      border-color: #f59e0b;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+    }
+
+    .error-msg {
+      color: #ef4444;
+      margin-top: 16px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    /* PANEL ADMIN */
+    .admin-container {
+      max-width: 600px;
+      margin: 0 auto;
+      display: none;
+    }
+
+    .admin-header {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 16px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .admin-header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: #f59e0b;
+    }
+
+    .admin-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+    }
+
+    .btn-logout {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid #ef4444;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .btn-logout:hover {
+      background: rgba(239, 68, 68, 0.3);
+    }
+
+    .section-admin {
+      background: rgba(0,0,0,0.4);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-admin h2 {
+      font-size: 1.5rem;
+      color: #f59e0b;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .item-edit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+    }
+
+    .item-edit label {
+      flex: 1;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .item-edit input {
+      width: 120px;
+      padding: 10px 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: #fff;
+      text-align: right;
+    }
+
+    .item-edit input:focus {
+      outline: none;
+      border-color: #f59e0b;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .btn-save {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-save:active {
+      transform: translateY(0);
+    }
+
+    .success-msg {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s;
+      z-index: 9999;
+    }
+
+    .success-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .change-password {
+      text-align: center;
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+    }
+
+    .change-password h3 {
+      font-size: 1.2rem;
+      color: #f59e0b;
+      margin-bottom: 16px;
+    }
+
+    .change-password input {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .change-password input:focus {
+      outline: none;
+      border-color: #f59e0b;
+    }
+
+    .btn-change-pass {
+      padding: 10px 24px;
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+      border: 1px solid #f59e0b;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-change-pass:hover {
+      background: rgba(245, 158, 11, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <!-- PANTALLA DE LOGIN -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-box">
+      <h1>🔐 Acceso Admin</h1>
+      <p>Ingresa tu contraseña</p>
+      <input 
+        type="password" 
+        id="passwordInput" 
+        class="login-input" 
+        placeholder="Contraseña"
+        onkeypress="if(event.key === 'Enter') verificarPassword()"
+      />
+      <button class="btn-login" onclick="verificarPassword()">Entrar</button>
+      <p class="error-msg" id="errorMsg">❌ Contraseña incorrecta</p>
+    </div>
+  </div>
+
+  <!-- PANEL ADMIN -->
+  <div class="admin-container" id="adminPanel">
+    <div class="admin-header">
+      <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+      <h1>🔐 Panel de Administración</h1>
+      <p>Edita los precios del menú fácilmente</p>
+    </div>
+
+    <div id="loading" class="loading">Cargando precios...</div>
+    <div id="admin-content" style="display: none;"></div>
+
+    <button class="btn-save" onclick="guardarPrecios()">💾 Guardar Cambios</button>
+
+    <div class="change-password">
+      <h3>🔑 Cambiar Contraseña</h3>
+      <input 
+        type="password" 
+        id="newPassword" 
+        placeholder="Nueva contraseña"
+      />
+      <br>
+      <button class="btn-change-pass" onclick="cambiarPassword()">Cambiar</button>
+    </div>
+  </div>
+
+  <div id="successMsg" class="success-msg">✅ ¡Guardado correctamente!</div>
+
+  <script>
+    // CONTRASEÑA POR DEFECTO: "menu2025"
+    // La señora puede cambiarla desde el panel
+    const PASSWORD_KEY = 'admin-password';
+    const DEFAULT_PASSWORD = 'menu2025';
+
+    // Verificar contraseña
+    async function verificarPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const passwordGuardada = await obtenerPassword();
+
+      if (input === passwordGuardada) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        cargarPrecios();
+      } else {
+        document.getElementById('errorMsg').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        setTimeout(() => {
+          document.getElementById('errorMsg').style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    // Obtener contraseña guardada
+    async function obtenerPassword() {
+      try {
+        const resultado = await window.storage.get(PASSWORD_KEY);
+        return resultado && resultado.value ? resultado.value : DEFAULT_PASSWORD;
+      } catch (error) {
+        return DEFAULT_PASSWORD;
+      }
+    }
+
+    // Cambiar contraseña
+    async function cambiarPassword() {
+      const nuevaPassword = document.getElementById('newPassword').value;
+      
+      if (!nuevaPassword || nuevaPassword.length < 4) {
+        alert('La contraseña debe tener al menos 4 caracteres');
+        return;
+      }
+
+      try {
+        await window.storage.set(PASSWORD_KEY, nuevaPassword);
+        mostrarMensaje('✅ ¡Contraseña cambiada!');
+        document.getElementById('newPassword').value = '';
+      } catch (error) {
+        alert('Error al cambiar la contraseña');
+      }
+    }
+
+    // Cerrar sesión
+    function cerrarSesion() {
+      document.getElementById('adminPanel').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('passwordInput').value = '';
+    }
+
+    // Precios por defecto
+    const preciosDefault = {
+      'papa-huancaina': '6.000',
+      'yucas-huancaina': '7.000',
+      'pulpo-olivo': '9.900',
+      'leche-tigre': '8.900',
+      'copon-leche': '14.000',
+      'anticucho-corazon': '8.000',
+      'anticucho-pollo': '7.500',
+      'anticucho-carne': '9.900',
+      'ceviche-pescado': '9.900',
+      'pescado-camarones': '12.900',
+      'ceviche-mixto': '13.500',
+      'ceviche-cilantro': '11.000',
+      'causa-camarones': '9.900',
+      'causa-acevichada': '8.900',
+      'causa-limena': '7.000'
+    };
+
+    const nombresPlatos = {
+      'papa-huancaina': 'Papa a la Huancaina',
+      'yucas-huancaina': 'Yucas fritas con Huancaina',
+      'pulpo-olivo': 'Pulpo al Olivo',
+      'leche-tigre': 'Leche de Tigre',
+      'copon-leche': 'Copón de Leche de tigre Carretillero',
+      'anticucho-corazon': 'Anticucho de Corazón',
+      'anticucho-pollo': 'Anticucho de Pollo',
+      'anticucho-carne': 'Anticucho de Carne',
+      'ceviche-pescado': 'Ceviche De Pescado',
+      'pescado-camarones': 'Pescado y Camarones',
+      'ceviche-mixto': 'Ceviche Mixto',
+      'ceviche-cilantro': 'Ceviche al Cilantro',
+      'causa-camarones': 'Causa de Camarones',
+      'causa-acevichada': 'Causa Acevichada',
+      'causa-limena': 'Causa Limeña'
+    };
+
+    const categorias = {
+      'Entradas': ['papa-huancaina', 'yucas-huancaina', 'pulpo-olivo', 'leche-tigre', 'copon-leche', 'anticucho-corazon', 'anticucho-pollo', 'anticucho-carne'],
+      'Ceviches': ['ceviche-pescado', 'pescado-camarones', 'ceviche-mixto', 'ceviche-cilantro'],
+      'Causas': ['causa-camarones', 'causa-acevichada', 'causa-limena']
+    };
+
+    let precios = {};
+
+    // Cargar precios guardados
+    async function cargarPrecios() {
+      try {
+        const resultado = await window.storage.get('menu-precios');
+        if (resultado && resultado.value) {
+          precios = JSON.parse(resultado.value);
+        } else {
+          precios = { ...preciosDefault };
+        }
+      } catch (error) {
+        console.log('No hay precios guardados, usando defaults');
+        precios = { ...preciosDefault };
+      }
+      
+      mostrarFormulario();
+    }
+
+    // Mostrar formulario de edición
+    function mostrarFormulario() {
+      const container = document.getElementById('admin-content');
+      let html = '';
+
+      for (const [categoria, platos] of Object.entries(categorias)) {
+        html += `
+          <div class="section-admin">
+            <h2>${categoria}</h2>
+        `;
+
+        platos.forEach(idPlato => {
+          const nombre = nombresPlatos[idPlato];
+          const precio = precios[idPlato] || preciosDefault[idPlato];
+          
+          html += `
+            <div class="item-edit">
+              <label>${nombre}</label>
+              <input 
+                type="text" 
+                id="${idPlato}" 
+                value="${precio}"
+                placeholder="0.000"
+              />
+            </div>
+          `;
+        });
+
+        html += `</div>`;
+      }
+
+      container.innerHTML = html;
+      document.getElementById('loading').style.display = 'none';
+      container.style.display = 'block';
+    }
+
+    // Guardar precios
+    async function guardarPrecios() {
+      const nuevosPrecios = {};
+      
+      for (const idPlato of Object.keys(nombresPlatos)) {
+        const input = document.getElementById(idPlato);
+        if (input) {
+          nuevosPrecios[idPlato] = input.value;
+        }
+      }
+
+      try {
+        await window.storage.set('menu-precios', JSON.stringify(nuevosPrecios));
+        mostrarMensaje('✅ ¡Precios guardados correctamente!');
+        precios = nuevosPrecios;
+      } catch (error) {
+        alert('Error al guardar los precios. Intenta de nuevo.');
+        console.error(error);
+      }
+    }
+
+    // Mostrar mensaje
+    function mostrarMensaje(texto) {
+      const msg = document.getElementById('successMsg');
+      msg.textContent = texto;
+      msg.classList.add('show');
+      setTimeout(() => {
+        msg.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
