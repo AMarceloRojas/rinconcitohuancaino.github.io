@@ -12,40 +12,24 @@
   <div class="loader-screen">
     <div class="loader-container">
       <svg class="hummingbird-loader" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
-        <!-- Pico (derecha) -->
         <path class="beak" d="M 125 70 L 145 70" stroke="#8b4513" stroke-width="2.5" fill="none"/>
-        
-        <!-- Cabeza -->
         <circle class="head" cx="115" cy="70" r="14" fill="#1e4d2b"/>
-        
-        <!-- Ojo -->
         <circle class="eye" cx="118" cy="68" r="2.5" fill="#fff"/>
-        
-        <!-- Cuerpo del colibrí -->
         <ellipse class="body" cx="85" cy="70" rx="32" ry="20" fill="#2d5f3f"/>
-        
-        <!-- Detalles decorativos en el pecho -->
         <ellipse class="chest-detail" cx="90" cy="70" rx="15" ry="10" fill="#5fb377" opacity="0.5"/>
-        
-        <!-- Ala superior -->
         <g class="wing wing-top">
           <ellipse cx="80" cy="45" rx="10" ry="30" fill="#4a9d5f" opacity="0.8"/>
           <ellipse cx="78" cy="40" rx="8" ry="25" fill="#5fb377" opacity="0.6"/>
         </g>
-        
-        <!-- Ala inferior -->
         <g class="wing wing-bottom">
           <ellipse cx="80" cy="95" rx="10" ry="30" fill="#4a9d5f" opacity="0.8"/>
           <ellipse cx="78" cy="100" rx="8" ry="25" fill="#5fb377" opacity="0.6"/>
         </g>
-        
-        <!-- Cola (izquierda) -->
         <path class="tail tail-1" d="M 55 65 Q 25 60, 10 55" stroke="#2d5f3f" stroke-width="3" fill="none"/>
         <path class="tail tail-2" d="M 55 70 Q 25 70, 5 70" stroke="#1e4d2b" stroke-width="3.5" fill="none"/>
         <path class="tail tail-3" d="M 55 75 Q 25 80, 10 85" stroke="#2d5f3f" stroke-width="3" fill="none"/>
       </svg>
       
-      <!-- Partículas brillantes alrededor -->
       <div class="sparkles">
         <span class="sparkle" style="--delay: 0s; --x: -40px; --y: -30px;"></span>
         <span class="sparkle" style="--delay: 0.3s; --x: 40px; --y: -20px;"></span>
@@ -71,151 +55,195 @@
   </section>
 
   <!-- MENÚ -->
-  <!-- MENÚ -->
-<main class="page" id="menu">
-  <header class="topbar">
-    <h1>Nuestro Menú</h1>
-    <p>Descubre los sabores de nuestra cocina 👇</p>
-  </header>
+  <main class="page" id="menu">
+    <header class="topbar">
+      <h1>Nuestro Menú</h1>
+      <p>Descubre los sabores de nuestra cocina 👇</p>
+    </header>
 
-  <!-- ENTRADAS -->
-  <section class="card menu-section">
-    <div class="section-header">
-      <h2>Entradas</h2>
-    </div>
-    <div class="menu-items">
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Papa a la Huancaina</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$6.000</strong>
+    <!-- ENTRADAS -->
+    <section class="card menu-section">
+      <div class="section-header">
+        <h2>Entradas</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Papa a la Huancaina</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="papa-huancaina">$6.000</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Yucas fritas con Huancaina</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="yucas-huancaina">$7.000</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Pulpo al Olivo</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pulpo-olivo">$9.900</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Leche de Tigre</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="leche-tigre">$8.900</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Copón de Leche de tigre Carretillero</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="copon-leche">$14.000</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Anticucho de Corazón</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="anticucho-corazon">$8.000</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Anticucho de Pollo</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="anticucho-pollo">$7.500</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Anticucho de Carne</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="anticucho-carne">$9.900</strong>
+          </div>
         </div>
       </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Yucas fritas con Huancaina</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$7.000</strong>
-        </div>
+      <div class="section-image">
+        <img src="assets/anticucho.jpg" alt="Anticucho de Corazón">
       </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Pulpo al Olivo</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$9.900</strong>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Leche de Tigre</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$8.900</strong>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Copón de Leche de tigre Carretillero</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$14.000</strong>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Anticucho de Corazón</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$8.000</strong>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Anticucho de Pollo</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$7.500</strong>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Anticucho de Carne</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$9.900</strong>
-        </div>
-      </div>
-    </div>
-    <div class="section-image">
-      <img src="assets/anticucho.jpg" alt="Anticucho de Corazón">
-    </div>
-  </section>
+    </section>
 
-  <!-- CEVICHES -->
-  <section class="card menu-section">
-    <div class="section-header orange">
-      <h2>Ceviches</h2>
-    </div>
-    <div class="menu-items">
-      <div class="item featured">
-        <div class="item-info">
-          <span class="item-name">Ceviche De Pescado</span>
-          <p class="item-desc">Pescado marinado con limón sutil, acompañado de choclo, camote y cancha.</p>
-          <strong class="item-price">$9.900</strong>
+    <!-- CEVICHES -->
+    <section class="card menu-section">
+      <div class="section-header orange">
+        <h2>Ceviches</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item featured">
+          <div class="item-info">
+            <span class="item-name">Ceviche De Pescado</span>
+            <p class="item-desc">Pescado marinado con limón sutil, acompañado de choclo, camote y cancha.</p>
+            <strong class="item-price" data-price-id="ceviche-pescado">$9.900</strong>
+          </div>
+        </div>
+        <div class="item featured">
+          <div class="item-info">
+            <span class="item-name">Pescado y Camarones</span>
+            <p class="item-desc">Pescado y camarones marinados en limón acompañado de choclo, camote y cancha.</p>
+            <strong class="item-price" data-price-id="pescado-camarones">$12.900</strong>
+          </div>
+        </div>
+        <div class="item featured">
+          <div class="item-info">
+            <span class="item-name">Ceviche Mixto</span>
+            <p class="item-desc">Pescado con pulpa, camarón, calamar marinados en limón, acompañado de choclo, camote y cancha.</p>
+            <strong class="item-price" data-price-id="ceviche-mixto">$13.500</strong>
+          </div>
+        </div>
+        <div class="item featured">
+          <div class="item-info">
+            <span class="item-name">Ceviche al Cilantro</span>
+            <p class="item-desc">Filete de pescado cortados en cubos cilantro frescos (solo las hojas), licuado con un chorrito de caldo de pescado, zumo de limón de pika o sutil sal al gusto, ajos molido, ají o rocoto y pimienta.</p>
+            <strong class="item-price" data-price-id="ceviche-cilantro">$11.000</strong>
+          </div>
         </div>
       </div>
-      <div class="item featured">
-        <div class="item-info">
-          <span class="item-name">Pescado y Camarones</span>
-          <p class="item-desc">Pescado y camarones marinados en limón acompañado de choclo, camote y cancha.</p>
-          <strong class="item-price">$12.900</strong>
-        </div>
+      <div class="section-image">
+        <img src="assets/ceviche.jpg" alt="Ceviche De Pescado">
       </div>
-      <div class="item featured">
-        <div class="item-info">
-          <span class="item-name">Ceviche Mixto</span>
-          <p class="item-desc">Pescado con pulpa, camarón, calamar marinados en limón, acompañado de choclo, camote y cancha.</p>
-          <strong class="item-price">$13.500</strong>
-        </div>
-      </div>
-      <div class="item featured">
-        <div class="item-info">
-          <span class="item-name">Ceviche al Cilantro</span>
-          <p class="item-desc">Filete de pescado cortados en cubos cilantro frescos (solo las hojas), licuado con un chorrito de caldo de pescado, zumo de limón de pika o sutil sal al gusto, ajos molido, ají o rocoto y pimienta.</p>
-          <strong class="item-price">$11.000</strong>
-        </div>
-      </div>
-    </div>
-    <div class="section-image">
-      <img src="assets/ceviche.jpg" alt="Ceviche De Pescado">
-    </div>
-  </section>
+    </section>
 
-  <!-- CAUSAS -->
-  <section class="card menu-section">
-    <div class="section-header">
-      <h2>Causas</h2>
-    </div>
-    <div class="menu-items">
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Causa de Camarones</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$9.900</strong>
+    <!-- CAUSAS -->
+    <section class="card menu-section">
+      <div class="section-header">
+        <h2>Causas</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Causa de Camarones</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="causa-camarones">$9.900</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Causa Acevichada</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="causa-acevichada">$8.900</strong>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-info">
+            <span class="item-name">Causa Limeña</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="causa-limena">$7.000</strong>
+          </div>
         </div>
       </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Causa Acevichada</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$8.900</strong>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-info">
-          <span class="item-name">Causa Limeña</span>
-          <span class="item-dots"></span>
-          <strong class="item-price">$7.000</strong>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Configuración de Firebase
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDHacFYORJovCmxBU2o4nXE53f1jiAyM",
+      authDomain: "menu-virtual-cdcb5.firebaseapp.com",
+      projectId: "menu-virtual-cdcb5",
+      storageBucket: "menu-virtual-cdcb5.firebasestorage.app",
+      messagingSenderId: "106795605897",
+      appId: "1:106795605897:web:7f706743a05ba69e536648",
+      measurementId: "G-YBFKM4ZHYG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Cargar precios desde Firebase
+    async function cargarPrecios() {
+      try {
+        const docRef = doc(db, 'menu', 'precios');
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          const precios = docSnap.data();
+          
+          // Actualizar todos los precios en el DOM
+          document.querySelectorAll('[data-price-id]').forEach(el => {
+            const id = el.getAttribute('data-price-id');
+            if (precios[id]) {
+              el.textContent = '$' + precios[id];
+            }
+          });
+        }
+      } catch (error) {
+        console.log('Usando precios por defecto');
+      }
+    }
+
+    // Cargar precios al inicio
+    cargarPrecios();
+  </script>
 
   <script src="js/app.js"></script>
 </body>

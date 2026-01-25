@@ -15,7 +15,6 @@
       padding: 20px;
     }
 
-    /* PANTALLA DE LOGIN */
     .login-screen {
       display: flex;
       align-items: center;
@@ -86,7 +85,6 @@
       display: none;
     }
 
-    /* PANEL ADMIN */
     .admin-container {
       max-width: 600px;
       margin: 0 auto;
@@ -320,66 +318,32 @@
 
   <div id="successMsg" class="success-msg">✅ ¡Guardado correctamente!</div>
 
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDHacFYORJovCmxBU2o4nXE53f1jiAyM",
+      authDomain: "menu-virtual-cdcb5.firebaseapp.com",
+      projectId: "menu-virtual-cdcb5",
+      storageBucket: "menu-virtual-cdcb5.firebasestorage.app",
+      messagingSenderId: "106795605897",
+      appId: "1:106795605897:web:7f706743a05ba69e536648",
+      measurementId: "G-YBFKM4ZHYG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    window.db = db;
+    window.doc = doc;
+    window.getDoc = getDoc;
+    window.setDoc = setDoc;
+  </script>
+
   <script>
-    // CONTRASEÑA POR DEFECTO: "menu2025"
-    // La señora puede cambiarla desde el panel
-    const PASSWORD_KEY = 'admin-password';
     const DEFAULT_PASSWORD = 'menu2025';
 
-    // Verificar contraseña
-    async function verificarPassword() {
-      const input = document.getElementById('passwordInput').value;
-      const passwordGuardada = await obtenerPassword();
-
-      if (input === passwordGuardada) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-        cargarPrecios();
-      } else {
-        document.getElementById('errorMsg').style.display = 'block';
-        document.getElementById('passwordInput').value = '';
-        setTimeout(() => {
-          document.getElementById('errorMsg').style.display = 'none';
-        }, 3000);
-      }
-    }
-
-    // Obtener contraseña guardada
-    async function obtenerPassword() {
-      try {
-        const resultado = await window.storage.get(PASSWORD_KEY);
-        return resultado && resultado.value ? resultado.value : DEFAULT_PASSWORD;
-      } catch (error) {
-        return DEFAULT_PASSWORD;
-      }
-    }
-
-    // Cambiar contraseña
-    async function cambiarPassword() {
-      const nuevaPassword = document.getElementById('newPassword').value;
-      
-      if (!nuevaPassword || nuevaPassword.length < 4) {
-        alert('La contraseña debe tener al menos 4 caracteres');
-        return;
-      }
-
-      try {
-        await window.storage.set(PASSWORD_KEY, nuevaPassword);
-        mostrarMensaje('✅ ¡Contraseña cambiada!');
-        document.getElementById('newPassword').value = '';
-      } catch (error) {
-        alert('Error al cambiar la contraseña');
-      }
-    }
-
-    // Cerrar sesión
-    function cerrarSesion() {
-      document.getElementById('adminPanel').style.display = 'none';
-      document.getElementById('loginScreen').style.display = 'flex';
-      document.getElementById('passwordInput').value = '';
-    }
-
-    // Precios por defecto
     const preciosDefault = {
       'papa-huancaina': '6.000',
       'yucas-huancaina': '7.000',
@@ -424,24 +388,79 @@
 
     let precios = {};
 
-    // Cargar precios guardados
+    async function verificarPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const passwordGuardada = await obtenerPassword();
+
+      if (input === passwordGuardada) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        cargarPrecios();
+      } else {
+        document.getElementById('errorMsg').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        setTimeout(() => {
+          document.getElementById('errorMsg').style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    async function obtenerPassword() {
+      try {
+        const docRef = window.doc(window.db, 'admin', 'config');
+        const docSnap = await window.getDoc(docRef);
+        
+        if (docSnap.exists() && docSnap.data().password) {
+          return docSnap.data().password;
+        }
+        return DEFAULT_PASSWORD;
+      } catch (error) {
+        return DEFAULT_PASSWORD;
+      }
+    }
+
+    async function cambiarPassword() {
+      const nuevaPassword = document.getElementById('newPassword').value;
+      
+      if (!nuevaPassword || nuevaPassword.length < 4) {
+        alert('La contraseña debe tener al menos 4 caracteres');
+        return;
+      }
+
+      try {
+        const docRef = window.doc(window.db, 'admin', 'config');
+        await window.setDoc(docRef, { password: nuevaPassword });
+        mostrarMensaje('✅ ¡Contraseña cambiada!');
+        document.getElementById('newPassword').value = '';
+      } catch (error) {
+        alert('Error al cambiar la contraseña');
+      }
+    }
+
+    function cerrarSesion() {
+      document.getElementById('adminPanel').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('passwordInput').value = '';
+    }
+
     async function cargarPrecios() {
       try {
-        const resultado = await window.storage.get('menu-precios');
-        if (resultado && resultado.value) {
-          precios = JSON.parse(resultado.value);
+        const docRef = window.doc(window.db, 'menu', 'precios');
+        const docSnap = await window.getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          precios = docSnap.data();
         } else {
           precios = { ...preciosDefault };
         }
       } catch (error) {
-        console.log('No hay precios guardados, usando defaults');
+        console.log('Usando precios por defecto');
         precios = { ...preciosDefault };
       }
       
       mostrarFormulario();
     }
 
-    // Mostrar formulario de edición
     function mostrarFormulario() {
       const container = document.getElementById('admin-content');
       let html = '';
@@ -477,7 +496,6 @@
       container.style.display = 'block';
     }
 
-    // Guardar precios
     async function guardarPrecios() {
       const nuevosPrecios = {};
       
@@ -489,7 +507,8 @@
       }
 
       try {
-        await window.storage.set('menu-precios', JSON.stringify(nuevosPrecios));
+        const docRef = window.doc(window.db, 'menu', 'precios');
+        await window.setDoc(docRef, nuevosPrecios);
         mostrarMensaje('✅ ¡Precios guardados correctamente!');
         precios = nuevosPrecios;
       } catch (error) {
@@ -498,7 +517,6 @@
       }
     }
 
-    // Mostrar mensaje
     function mostrarMensaje(texto) {
       const msg = document.getElementById('successMsg');
       msg.textContent = texto;
@@ -507,6 +525,11 @@
         msg.classList.remove('show');
       }, 3000);
     }
+
+    window.verificarPassword = verificarPassword;
+    window.cambiarPassword = cambiarPassword;
+    window.cerrarSesion = cerrarSesion;
+    window.guardarPrecios = guardarPrecios;
   </script>
 </body>
 </html>
