@@ -85,8 +85,171 @@
       display: none;
     }
 
+    /* BOTÓN DE FILTROS FLOTANTE */
+    .filter-button-admin {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-radius: 50%;
+      display: none;
+      place-items: center;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .filter-button-admin:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 30px rgba(245, 158, 11, 0.6);
+    }
+
+    .filter-button-admin svg {
+      width: 28px;
+      height: 28px;
+      color: #000;
+    }
+
+    .filter-button-admin.show {
+      display: grid;
+    }
+
+    /* PANEL DE FILTROS */
+    .admin-filter-panel {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      max-width: 380px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 2000;
+      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 5px 0 40px rgba(0, 0, 0, 0.9);
+      border-right: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .admin-filter-panel.active {
+      left: 0;
+    }
+
+    .admin-filter-header {
+      padding: 28px 24px;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-filter-header h3 {
+      margin: 0;
+      font-size: 2rem;
+      color: #f59e0b;
+      font-weight: 700;
+    }
+
+    .close-admin-filter {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #FFFFFF;
+      font-size: 28px;
+      cursor: pointer;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .close-admin-filter:hover {
+      background: #ef4444;
+      transform: rotate(90deg);
+    }
+
+    .admin-filter-categories {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      scrollbar-width: thin;
+      scrollbar-color: #f59e0b rgba(245, 158, 11, 0.1);
+    }
+
+    .admin-filter-categories::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .admin-filter-categories::-webkit-scrollbar-track {
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .admin-filter-categories::-webkit-scrollbar-thumb {
+      background: #f59e0b;
+      border-radius: 10px;
+    }
+
+    .admin-filter-category-btn {
+      width: 100%;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #FFFFFF;
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .admin-filter-category-btn:hover {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: rgba(245, 158, 11, 0.5);
+      transform: translateX(4px);
+    }
+
+    .admin-filter-category-btn.active {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-color: #f59e0b;
+      color: #000;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+
+    .admin-filter-category-btn span:first-child {
+      font-size: 1.5rem;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+    }
+
+    .admin-filter-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .admin-filter-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
     .admin-container {
-      max-width: 600px;
+      max-width: 800px;
       margin: 0 auto;
       display: none;
     }
@@ -134,6 +297,7 @@
       border-radius: 16px;
       padding: 24px;
       margin-bottom: 24px;
+      scroll-margin-top: 100px;
     }
 
     .section-admin h2 {
@@ -271,6 +435,33 @@
     .btn-change-pass:hover {
       background: rgba(245, 158, 11, 0.3);
     }
+
+    @media (max-width: 768px) {
+      .filter-button-admin {
+        width: 50px;
+        height: 50px;
+        top: 16px;
+        left: 16px;
+      }
+
+      .filter-button-admin svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .admin-filter-panel {
+        max-width: 100%;
+      }
+
+      .admin-filter-header h3 {
+        font-size: 1.5rem;
+      }
+
+      .admin-filter-category-btn {
+        font-size: 1rem;
+        padding: 14px 16px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -291,12 +482,118 @@
     </div>
   </div>
 
+  <!-- BOTÓN DE FILTROS FLOTANTE -->
+  <div class="filter-button-admin" id="filterButtonAdmin">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="4" y1="6" x2="20" y2="6"></line>
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <line x1="4" y1="18" x2="20" y2="18"></line>
+      <circle cx="7" cy="6" r="1.5" fill="currentColor"></circle>
+      <circle cx="14" cy="12" r="1.5" fill="currentColor"></circle>
+      <circle cx="10" cy="18" r="1.5" fill="currentColor"></circle>
+    </svg>
+  </div>
+
+  <!-- PANEL DE FILTROS -->
+  <div class="admin-filter-panel" id="adminFilterPanel">
+    <div class="admin-filter-header">
+      <h3>📂 Categorías</h3>
+      <button class="close-admin-filter" id="closeAdminFilter">✕</button>
+    </div>
+    
+    <div class="admin-filter-categories">
+      <button class="admin-filter-category-btn active" data-category="all">
+        <span>📋</span>
+        <span>Todas las categorías</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="entradas">
+        <span>🥘</span>
+        <span>Entradas</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="ceviches">
+        <span>🐟</span>
+        <span>Ceviches</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="causas">
+        <span>🥔</span>
+        <span>Causas</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="criollos">
+        <span>🍖</span>
+        <span>Criollos del Perú</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="sopas">
+        <span>🍲</span>
+        <span>Sopas</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="pastas">
+        <span>🍝</span>
+        <span>Pastas</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="fetuccini">
+        <span>🍜</span>
+        <span>Fetuccini</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="pollos">
+        <span>🍗</span>
+        <span>Pollos</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="casa-recomienda">
+        <span>⭐</span>
+        <span>La Casa Recomienda</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="arroz">
+        <span>🍚</span>
+        <span>Arroz</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="aeropuerto">
+        <span>✈️</span>
+        <span>Aeropuerto</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="risotto">
+        <span>🍛</span>
+        <span>Risotto</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="tacu-tacu">
+        <span>🫘</span>
+        <span>Tacu-Tacu</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="pescados">
+        <span>🐠</span>
+        <span>Pescados</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="filetes">
+        <span>🥩</span>
+        <span>Filetes</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="vegetariano">
+        <span>🥗</span>
+        <span>Vegetariano</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="agregados">
+        <span>🍟</span>
+        <span>Agregados</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="postres">
+        <span>🍰</span>
+        <span>Postres</span>
+      </button>
+      <button class="admin-filter-category-btn" data-category="bebidas">
+        <span>☕</span>
+        <span>Bebidas Calientes</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Overlay para cerrar filtros -->
+  <div class="admin-filter-overlay" id="adminFilterOverlay"></div>
+
   <!-- PANEL ADMIN -->
   <div class="admin-container" id="adminPanel">
     <div class="admin-header">
       <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
       <h1>🔐 Panel de Administración</h1>
-      <p>Edita los precios del menú fácilmente</p>
+      <p>Edita los precios del menú - Usa el filtro para navegar 👈</p>
     </div>
 
     <div id="loading" class="loading">Cargando precios...</div>
@@ -342,50 +639,35 @@
   </script>
 
   <script>
+preciosDefault = {"papa-huancaina": "6.000", "yucas-huancaina": "7.000", "pulpo-olivo": "9.900", "leche-tigre": "8.900", "copon-leche": "14.000", "anticucho-corazon": "8.000", "anticucho-pollo": "7.500", "anticucho-carne": "9.900", "ceviche-pescado": "9.900", "pescado-camarones": "12.900", "ceviche-mixto": "13.500", "ceviche-cilantro": "11.000", "causa-camarones": "9.900", "causa-acevichada": "8.900", "causa-limena": "7.000", "lomo-saltado": "11.000", "pollo-saltado": "8.500", "aji-gallina": "8.000", "combinado": "9.000", "sudado-pescado": "9.200", "parihuela": "12.000", "dieta-pollo": "5.500", "chupe-camarones": "12.900", "chupe-mariscos": "10.500", "tallarin-pollo": "8.500", "tallarin-carne": "10.500", "tallarin-mixto": "12.500", "tallarin-3sabores": "13.800", "tallarin-mariscos": "12.000", "fetuccini-pollo": "10.500", "fetuccini-lomo": "11.500", "fetuccini-pesto": "8.500", "filete-fetuccini": "14.900", "pollo-broaster": "7.000", "chicken-huanca": "7.000", "pasion-huanca": "8.500", "salchipapa": "4.000", "chicharron-pollo": "8.000", "pollo-champinon": "8.500", "pechuga-plancha": "9.000", "chicharron-pescado": "8.000", "chicharron-calamar": "9.000", "jalea-mixta": "27.000", "jalea-especial": "35.000", "picante-mariscos": "9.500", "pulpo-parrilla": "13.000", "trio-marino": "28.000", "ronda-marina": "38.000", "chaufa-pollo": "8.000", "chaufa-carne": "10.500", "chaufa-mariscos": "11.500", "chaufa-mixto": "12.500", "chaufa-3sabores": "13.500", "chaufa-camarones": "13.500", "arroz-mariscos": "11.000", "aeropuerto-pollo": "9.000", "aeropuerto-carne": "11.500", "aeropuerto-3sabores": "13.800", "risotto-pollo": "10.500", "risotto-lomo": "11.500", "risotto-camarones": "13.500", "risotto-mariscos": "11.000", "tacutacu-lomo": "11.000", "tacutacu-pollo": "9.000", "tacutacu-camarones": "13.000", "tacutacu-macho": "13.800", "pescado-camarones-salsa": "13.000", "pescado-mariscos-salsa": "14.500", "pescado-ajo": "10.500", "pescado-plancha": "8.900", "pescado-frito": "8.000", "filete-lomo-camarones": "13.800", "filete-mignon": "12.500", "filete-mar-tierra": "14.500", "chorrillana-filete": "13.000", "tofu-salteado": "8.500", "tallarin-vegetariano": "8.000", "tallarin-tofu": "8.500", "ceviche-champinon": "8.900", "causa-vegetariana": "8.000", "tortilla-verduras": "8.000", "arroz-vegetariano": "7.000", "fetuccini-champinon": "8.500", "cancha": "2.500", "choclo": "2.500", "papas-grande": "3.400", "papas-chica": "2.500", "arroz-agregado": "1.500", "ensalada-surtida": "2.500", "ensalada-palta": "4.500", "ensalada-criolla": "3.000", "camote": "1.800", "suspiro-limeno": "4.000", "mousse-maracuya": "4.000", "leche-asada": "4.000", "cafe": "1.200", "manzanilla": "1.200", "infusiones": "1.200", "te": "1.000"};
+
+nombresPlatos = {"papa-huancaina": "Papa a la Huancaina", "yucas-huancaina": "Yucas fritas con Huancaina", "pulpo-olivo": "Pulpo al Olivo", "leche-tigre": "Leche de Tigre", "copon-leche": "Copón de Leche de tigre Carretillero", "anticucho-corazon": "Anticucho de Corazón", "anticucho-pollo": "Anticucho de Pollo", "anticucho-carne": "Anticucho de Carne", "ceviche-pescado": "Ceviche De Pescado", "pescado-camarones": "Pescado y Camarones", "ceviche-mixto": "Ceviche Mixto", "ceviche-cilantro": "Ceviche al Cilantro", "causa-camarones": "Causa de Camarones", "causa-acevichada": "Causa Acevichada", "causa-limena": "Causa Limeña", "lomo-saltado": "Lomo Saltado", "pollo-saltado": "Pollo Saltado", "aji-gallina": "Ají de Gallina", "combinado": "Combinado", "sudado-pescado": "Sudado de Pescado", "parihuela": "Parihuela", "dieta-pollo": "Dieta de Pollo", "chupe-camarones": "Chupe de Camarones", "chupe-mariscos": "Chupe de Mariscos", "tallarin-pollo": "Tallarín Saltado de Pollo", "tallarin-carne": "Tallarín Saltado de Carne", "tallarin-mixto": "Tallarín Saltado Mixto", "tallarin-3sabores": "Tallarín Saltado 3 Sabores", "tallarin-mariscos": "Tallarín Saltado de Mariscos", "fetuccini-pollo": "Fetuccini a la Huancaina con Pollo Salteado", "fetuccini-lomo": "Fetuccini a la Huancaina con Lomo Salteado", "fetuccini-pesto": "Fetuccini al pesto c/n Pollo a la Plancha", "filete-fetuccini": "Filete con Fetuccini en salsa Huancaina", "pollo-broaster": "Pollo Broaster", "chicken-huanca": "Chicken Huanca", "pasion-huanca": "Pasión Huanca", "salchipapa": "Salchipapa", "chicharron-pollo": "Chicharron de Pollo con Papas Fritas", "pollo-champinon": "Pollo a la plancha en salsa de Champiñon", "pechuga-plancha": "Pechuga a la Plancha", "chicharron-pescado": "Chicharrón de Pescado", "chicharron-calamar": "Chicharrón de Calamar", "jalea-mixta": "Jalea Mixta", "jalea-especial": "Jalea Mixta Especial", "picante-mariscos": "Picante de Mariscos", "pulpo-parrilla": "Pulpo a la Parrilla", "trio-marino": "Trío Marino", "ronda-marina": "Ronda Marina", "chaufa-pollo": "Arroz Chaufa Pollo", "chaufa-carne": "Arroz Chaufa de Carne", "chaufa-mariscos": "Arroz Chaufa de Mariscos", "chaufa-mixto": "Arroz Chaufa Mixto", "chaufa-3sabores": "Arroz Chaufa 3 Sabores", "chaufa-camarones": "Arroz Chaufa Camarones", "arroz-mariscos": "Arroz con Mariscos", "aeropuerto-pollo": "Aeropuerto de Pollo", "aeropuerto-carne": "Aeropuerto de Carne", "aeropuerto-3sabores": "Aeropuerto 3 Sabores", "risotto-pollo": "Risotto Pollo Salteado", "risotto-lomo": "Risotto Lomo Salteado", "risotto-camarones": "Risotto con Camarones", "risotto-mariscos": "Risotto con Mariscos", "tacutacu-lomo": "Tacu tacu con Lomo salteado", "tacutacu-pollo": "Tacu tacu con Pollo Salteado", "tacutacu-camarones": "Tacu tacu con Camarones", "tacutacu-macho": "Tacu tacu A lo Macho", "pescado-camarones-salsa": "Pescado en Salsa de Camarones", "pescado-mariscos-salsa": "Pescado en Salsa de Mariscos", "pescado-ajo": "Pescado en Salsa de Ajo", "pescado-plancha": "Pescado A la Plancha", "pescado-frito": "Pescado Frito", "filete-lomo-camarones": "Filete de Lomo en Salsa de Camarones", "filete-mignon": "Filete Mignon", "filete-mar-tierra": "Filete Mar y Tierra", "chorrillana-filete": "Chorrillana de Filete", "tofu-salteado": "Tofu Salteado", "tallarin-vegetariano": "Tallarín vegetariano", "tallarin-tofu": "Tallarín Salteado de Tofu", "ceviche-champinon": "Ceviche de Champiñon", "causa-vegetariana": "Causa Vegetariana", "tortilla-verduras": "Tortilla de Verduras", "arroz-vegetariano": "Arroz Salteado Vegetariano", "fetuccini-champinon": "Fetuccini a la Huancaina con Champiñon Salteado", "cancha": "Cancha", "choclo": "Choclo", "papas-grande": "Papas fritas (grande)", "papas-chica": "Papas fritas (chica)", "arroz-agregado": "Arroz", "ensalada-surtida": "Ensalada surtida", "ensalada-palta": "Ensalada Palta Tomate", "ensalada-criolla": "Ensalada Criolla", "camote": "Camote", "suspiro-limeno": "Suspiro Limeño", "mousse-maracuya": "Mousse de Maracuya", "leche-asada": "Leche Asada", "cafe": "Café (Nescafe)", "manzanilla": "Manzanilla", "infusiones": "Infusiones", "te": "Té"};
+
+categorias = {"Entradas": ["papa-huancaina", "yucas-huancaina", "pulpo-olivo", "leche-tigre", "copon-leche", "anticucho-corazon", "anticucho-pollo", "anticucho-carne"], "Ceviches": ["ceviche-pescado", "pescado-camarones", "ceviche-mixto", "ceviche-cilantro"], "Causas": ["causa-camarones", "causa-acevichada", "causa-limena"], "Criollos del Perú": ["lomo-saltado", "pollo-saltado", "aji-gallina", "combinado"], "Sopas": ["sudado-pescado", "parihuela", "dieta-pollo", "chupe-camarones", "chupe-mariscos"], "Pastas": ["tallarin-pollo", "tallarin-carne", "tallarin-mixto", "tallarin-3sabores", "tallarin-mariscos"], "Fetuccini": ["fetuccini-pollo", "fetuccini-lomo", "fetuccini-pesto", "filete-fetuccini"], "Pollos": ["pollo-broaster", "chicken-huanca", "pasion-huanca", "salchipapa", "chicharron-pollo", "pollo-champinon", "pechuga-plancha"], "La Casa Recomienda": ["chicharron-pescado", "chicharron-calamar", "jalea-mixta", "jalea-especial", "picante-mariscos", "pulpo-parrilla", "trio-marino", "ronda-marina"], "Arroz": ["chaufa-pollo", "chaufa-carne", "chaufa-mariscos", "chaufa-mixto", "chaufa-3sabores", "chaufa-camarones", "arroz-mariscos"], "Aeropuerto": ["aeropuerto-pollo", "aeropuerto-carne", "aeropuerto-3sabores"], "Risotto": ["risotto-pollo", "risotto-lomo", "risotto-camarones", "risotto-mariscos"], "Tacu-Tacu": ["tacutacu-lomo", "tacutacu-pollo", "tacutacu-camarones", "tacutacu-macho"], "Pescados": ["pescado-camarones-salsa", "pescado-mariscos-salsa", "pescado-ajo", "pescado-plancha", "pescado-frito"], "Filetes": ["filete-lomo-camarones", "filete-mignon", "filete-mar-tierra", "chorrillana-filete"], "Vegetariano": ["tofu-salteado", "tallarin-vegetariano", "tallarin-tofu", "ceviche-champinon", "causa-vegetariana", "tortilla-verduras", "arroz-vegetariano", "fetuccini-champinon"], "Agregados": ["cancha", "choclo", "papas-grande", "papas-chica", "arroz-agregado", "ensalada-surtida", "ensalada-palta", "ensalada-criolla", "camote"], "Postres": ["suspiro-limeno", "mousse-maracuya", "leche-asada"], "Bebidas Calientes": ["cafe", "manzanilla", "infusiones", "te"]};
+
+    const categoryMap = {
+      "Entradas": "entradas",
+      "Ceviches": "ceviches",
+      "Causas": "causas",
+      "Criollos del Perú": "criollos",
+      "Sopas": "sopas",
+      "Pastas": "pastas",
+      "Fetuccini": "fetuccini",
+      "Pollos": "pollos",
+      "La Casa Recomienda": "casa-recomienda",
+      "Arroz": "arroz",
+      "Aeropuerto": "aeropuerto",
+      "Risotto": "risotto",
+      "Tacu-Tacu": "tacu-tacu",
+      "Pescados": "pescados",
+      "Filetes": "filetes",
+      "Vegetariano": "vegetariano",
+      "Agregados": "agregados",
+      "Postres": "postres",
+      "Bebidas Calientes": "bebidas"
+    };
+
     const DEFAULT_PASSWORD = 'menu2025';
-
-    const preciosDefault = {
-      'papa-huancaina': '6.000',
-      'yucas-huancaina': '7.000',
-      'pulpo-olivo': '9.900',
-      'leche-tigre': '8.900',
-      'copon-leche': '14.000',
-      'anticucho-corazon': '8.000',
-      'anticucho-pollo': '7.500',
-      'anticucho-carne': '9.900',
-      'ceviche-pescado': '9.900',
-      'pescado-camarones': '12.900',
-      'ceviche-mixto': '13.500',
-      'ceviche-cilantro': '11.000',
-      'causa-camarones': '9.900',
-      'causa-acevichada': '8.900',
-      'causa-limena': '7.000'
-    };
-
-    const nombresPlatos = {
-      'papa-huancaina': 'Papa a la Huancaina',
-      'yucas-huancaina': 'Yucas fritas con Huancaina',
-      'pulpo-olivo': 'Pulpo al Olivo',
-      'leche-tigre': 'Leche de Tigre',
-      'copon-leche': 'Copón de Leche de tigre Carretillero',
-      'anticucho-corazon': 'Anticucho de Corazón',
-      'anticucho-pollo': 'Anticucho de Pollo',
-      'anticucho-carne': 'Anticucho de Carne',
-      'ceviche-pescado': 'Ceviche De Pescado',
-      'pescado-camarones': 'Pescado y Camarones',
-      'ceviche-mixto': 'Ceviche Mixto',
-      'ceviche-cilantro': 'Ceviche al Cilantro',
-      'causa-camarones': 'Causa de Camarones',
-      'causa-acevichada': 'Causa Acevichada',
-      'causa-limena': 'Causa Limeña'
-    };
-
-    const categorias = {
-      'Entradas': ['papa-huancaina', 'yucas-huancaina', 'pulpo-olivo', 'leche-tigre', 'copon-leche', 'anticucho-corazon', 'anticucho-pollo', 'anticucho-carne'],
-      'Ceviches': ['ceviche-pescado', 'pescado-camarones', 'ceviche-mixto', 'ceviche-cilantro'],
-      'Causas': ['causa-camarones', 'causa-acevichada', 'causa-limena']
-    };
-
     let precios = {};
 
     async function verificarPassword() {
@@ -395,7 +677,9 @@
       if (input === passwordGuardada) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('filterButtonAdmin').classList.add('show');
         cargarPrecios();
+        initializeFilters();
       } else {
         document.getElementById('errorMsg').style.display = 'block';
         document.getElementById('passwordInput').value = '';
@@ -441,6 +725,7 @@
       document.getElementById('adminPanel').style.display = 'none';
       document.getElementById('loginScreen').style.display = 'flex';
       document.getElementById('passwordInput').value = '';
+      document.getElementById('filterButtonAdmin').classList.remove('show');
     }
 
     async function cargarPrecios() {
@@ -466,8 +751,9 @@
       let html = '';
 
       for (const [categoria, platos] of Object.entries(categorias)) {
+        const categoryId = categoryMap[categoria];
         html += `
-          <div class="section-admin">
+          <div class="section-admin" data-category="${categoryId}">
             <h2>${categoria}</h2>
         `;
 
@@ -524,6 +810,51 @@
       setTimeout(() => {
         msg.classList.remove('show');
       }, 3000);
+    }
+
+    function initializeFilters() {
+      const filterButton = document.getElementById('filterButtonAdmin');
+      const filterPanel = document.getElementById('adminFilterPanel');
+      const filterOverlay = document.getElementById('adminFilterOverlay');
+      const closeFilter = document.getElementById('closeAdminFilter');
+      const filterBtns = document.querySelectorAll('.admin-filter-category-btn');
+
+      filterButton.addEventListener('click', () => {
+        filterPanel.classList.add('active');
+        filterOverlay.classList.add('active');
+      });
+
+      closeFilter.addEventListener('click', closeFilterPanel);
+      filterOverlay.addEventListener('click', closeFilterPanel);
+
+      function closeFilterPanel() {
+        filterPanel.classList.remove('active');
+        filterOverlay.classList.remove('active');
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const category = btn.dataset.category;
+          
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          closeFilterPanel();
+          
+          if (category === 'all') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            mostrarMensaje('Mostrando todas las categorías');
+          } else {
+            const targetSection = document.querySelector(`.section-admin[data-category="${category}"]`);
+            if (targetSection) {
+              setTimeout(() => {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 300);
+              mostrarMensaje(`Ir a: ${btn.textContent.trim()}`);
+            }
+          }
+        });
+      });
     }
 
     window.verificarPassword = verificarPassword;

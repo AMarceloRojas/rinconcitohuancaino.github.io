@@ -3,42 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Menú Virtual</title>
+  <title>Menú Virtual - Rinconcito Huancaíno</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
   <!-- PANTALLA DE CARGA -->
   <div class="loader-screen">
+    <div class="loader-overlay"></div>
     <div class="loader-container">
-      <svg class="hummingbird-loader" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
-        <path class="beak" d="M 125 70 L 145 70" stroke="#8b4513" stroke-width="2.5" fill="none"/>
-        <circle class="head" cx="115" cy="70" r="14" fill="#1e4d2b"/>
-        <circle class="eye" cx="118" cy="68" r="2.5" fill="#fff"/>
-        <ellipse class="body" cx="85" cy="70" rx="32" ry="20" fill="#2d5f3f"/>
-        <ellipse class="chest-detail" cx="90" cy="70" rx="15" ry="10" fill="#5fb377" opacity="0.5"/>
-        <g class="wing wing-top">
-          <ellipse cx="80" cy="45" rx="10" ry="30" fill="#4a9d5f" opacity="0.8"/>
-          <ellipse cx="78" cy="40" rx="8" ry="25" fill="#5fb377" opacity="0.6"/>
-        </g>
-        <g class="wing wing-bottom">
-          <ellipse cx="80" cy="95" rx="10" ry="30" fill="#4a9d5f" opacity="0.8"/>
-          <ellipse cx="78" cy="100" rx="8" ry="25" fill="#5fb377" opacity="0.6"/>
-        </g>
-        <path class="tail tail-1" d="M 55 65 Q 25 60, 10 55" stroke="#2d5f3f" stroke-width="3" fill="none"/>
-        <path class="tail tail-2" d="M 55 70 Q 25 70, 5 70" stroke="#1e4d2b" stroke-width="3.5" fill="none"/>
-        <path class="tail tail-3" d="M 55 75 Q 25 80, 10 85" stroke="#2d5f3f" stroke-width="3" fill="none"/>
-      </svg>
-      
-      <div class="sparkles">
-        <span class="sparkle" style="--delay: 0s; --x: -40px; --y: -30px;"></span>
-        <span class="sparkle" style="--delay: 0.3s; --x: 40px; --y: -20px;"></span>
-        <span class="sparkle" style="--delay: 0.6s; --x: -30px; --y: 40px;"></span>
-        <span class="sparkle" style="--delay: 0.9s; --x: 35px; --y: 45px;"></span>
-        <span class="sparkle" style="--delay: 1.2s; --x: 0px; --y: -50px;"></span>
+      <div class="loader-image-wrapper">
+        <img src="assets/huancayo.png" alt="Paisaje de Huancayo" class="loader-image">
       </div>
       
-      <p class="loading-text">Cargando...</p>
+      <div class="loader-content">
+        <div class="loader-spinner">
+          <div class="spinner-ring"></div>
+          <div class="spinner-ring"></div>
+          <div class="spinner-ring"></div>
+        </div>
+        <p class="loading-text">Cargando sabores de Huancayo...</p>
+      </div>
     </div>
   </div>
 
@@ -54,6 +39,147 @@
     </div>
   </section>
 
+  <!-- BOTÓN DE FILTROS (FLOTANTE) -->
+  <div class="filter-button" id="filterButton">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="4" y1="6" x2="20" y2="6"></line>
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <line x1="4" y1="18" x2="20" y2="18"></line>
+      <circle cx="7" cy="6" r="1.5" fill="currentColor"></circle>
+      <circle cx="14" cy="12" r="1.5" fill="currentColor"></circle>
+      <circle cx="10" cy="18" r="1.5" fill="currentColor"></circle>
+    </svg>
+  </div>
+
+  <!-- ÍCONO DEL CARRITO (FLOTANTE) -->
+  <div class="cart-button" id="cartButton">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+    <span class="cart-count" id="cartCount">0</span>
+  </div>
+
+  <!-- PANEL LATERAL DEL CARRITO -->
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h3>Mi Carrito</h3>
+      <button class="close-cart" id="closeCart">✕</button>
+    </div>
+    
+    <div class="cart-items" id="cartItems">
+      <p class="empty-cart">Tu carrito está vacío</p>
+    </div>
+    
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-total">
+        <span>Total:</span>
+        <strong id="cartTotal">$0</strong>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">
+        Finalizar Compra
+      </button>
+    </div>
+  </div>
+
+  <!-- Overlay para cerrar carrito -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- PANEL DE FILTROS -->
+  <div class="filter-panel" id="filterPanel">
+    <div class="filter-header">
+      <h3>Categorías</h3>
+      <button class="close-filter" id="closeFilter">✕</button>
+    </div>
+    
+    <div class="filter-categories">
+      <button class="filter-category-btn active" data-category="all">
+        <span>📋</span>
+        <span>Todas las categorías</span>
+      </button>
+      <button class="filter-category-btn" data-category="entradas">
+        <span>🥘</span>
+        <span>Entradas</span>
+      </button>
+      <button class="filter-category-btn" data-category="ceviches">
+        <span>🐟</span>
+        <span>Ceviches</span>
+      </button>
+      <button class="filter-category-btn" data-category="causas">
+        <span>🥔</span>
+        <span>Causas</span>
+      </button>
+      <button class="filter-category-btn" data-category="criollos">
+        <span>🍖</span>
+        <span>Criollos del Perú</span>
+      </button>
+      <button class="filter-category-btn" data-category="sopas">
+        <span>🍲</span>
+        <span>Sopas</span>
+      </button>
+      <button class="filter-category-btn" data-category="pastas">
+        <span>🍝</span>
+        <span>Pastas</span>
+      </button>
+      <button class="filter-category-btn" data-category="fetuccini">
+        <span>🍜</span>
+        <span>Fetuccini</span>
+      </button>
+      <button class="filter-category-btn" data-category="pollos">
+        <span>🍗</span>
+        <span>Pollos</span>
+      </button>
+      <button class="filter-category-btn" data-category="casa-recomienda">
+        <span>⭐</span>
+        <span>La Casa Recomienda</span>
+      </button>
+      <button class="filter-category-btn" data-category="arroz">
+        <span>🍚</span>
+        <span>Arroz</span>
+      </button>
+      <button class="filter-category-btn" data-category="aeropuerto">
+        <span>✈️</span>
+        <span>Aeropuerto</span>
+      </button>
+      <button class="filter-category-btn" data-category="risotto">
+        <span>🍛</span>
+        <span>Risotto</span>
+      </button>
+      <button class="filter-category-btn" data-category="tacu-tacu">
+        <span>🫘</span>
+        <span>Tacu-Tacu</span>
+      </button>
+      <button class="filter-category-btn" data-category="pescados">
+        <span>🐠</span>
+        <span>Pescados</span>
+      </button>
+      <button class="filter-category-btn" data-category="filetes">
+        <span>🥩</span>
+        <span>Filetes</span>
+      </button>
+      <button class="filter-category-btn" data-category="vegetariano">
+        <span>🥗</span>
+        <span>Vegetariano</span>
+      </button>
+      <button class="filter-category-btn" data-category="agregados">
+        <span>🍟</span>
+        <span>Agregados</span>
+      </button>
+      <button class="filter-category-btn" data-category="postres">
+        <span>🍰</span>
+        <span>Postres</span>
+      </button>
+      <button class="filter-category-btn" data-category="bebidas">
+        <span>☕</span>
+        <span>Bebidas Calientes</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Overlay para cerrar filtros -->
+  <div class="filter-overlay" id="filterOverlay"></div>
+
   <!-- MENÚ -->
   <main class="page" id="menu">
     <header class="topbar">
@@ -61,188 +187,1498 @@
       <p>Descubre los sabores de nuestra cocina 👇</p>
     </header>
 
+
     <!-- ENTRADAS -->
-    <section class="card menu-section">
+    <section class="card menu-section" data-category="entradas">
       <div class="section-header">
         <h2>Entradas</h2>
       </div>
       <div class="menu-items">
-        <div class="item">
+        <div class="item with-image" data-product='{"id":"papa-huancaina","name":"Papa a la Huancaina","price":6000}'>
           <div class="item-info">
             <span class="item-name">Papa a la Huancaina</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="papa-huancaina">$6.000</strong>
           </div>
-        </div>
-        <div class="item">
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Papas a la Huancaina.png" alt="Papa a la Huancaina" loading="lazy">
+          </div>
+</div>
+        <div class="item with-image" data-product='{"id":"yucas-huancaina","name":"Yucas fritas con Huancaina","price":7000}'>
           <div class="item-info">
             <span class="item-name">Yucas fritas con Huancaina</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="yucas-huancaina">$7.000</strong>
           </div>
-        </div>
-        <div class="item">
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Yucas Fritas con Huancaina.png" alt="Yucas fritas con Huancaina" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"pulpo-olivo","name":"Pulpo al Olivo","price":9900}'>
           <div class="item-info">
             <span class="item-name">Pulpo al Olivo</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="pulpo-olivo">$9.900</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
-        <div class="item">
+        <div class="item" data-product='{"id":"leche-tigre","name":"Leche de Tigre","price":8900}'>
           <div class="item-info">
             <span class="item-name">Leche de Tigre</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="leche-tigre">$8.900</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
-        <div class="item">
+        <div class="item" data-product='{"id":"copon-leche","name":"Copón de Leche de tigre Carretillero","price":14000}'>
           <div class="item-info">
             <span class="item-name">Copón de Leche de tigre Carretillero</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="copon-leche">$14.000</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
-        <div class="item">
+        <div class="item" data-product='{"id":"anticucho-corazon","name":"Anticucho de Corazón","price":8000}'>
           <div class="item-info">
             <span class="item-name">Anticucho de Corazón</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="anticucho-corazon">$8.000</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
-        <div class="item">
+        <div class="item" data-product='{"id":"anticucho-pollo","name":"Anticucho de Pollo","price":7500}'>
           <div class="item-info">
             <span class="item-name">Anticucho de Pollo</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="anticucho-pollo">$7.500</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
-        <div class="item">
+        <div class="item" data-product='{"id":"anticucho-carne","name":"Anticucho de Carne","price":9900}'>
           <div class="item-info">
             <span class="item-name">Anticucho de Carne</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="anticucho-carne">$9.900</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
       </div>
       <div class="section-image">
-        <img src="assets/anticucho.jpg" alt="Anticucho de Corazón">
+        <img src="assets/fondopa.jpeg" alt="Anticucho de Corazón">
       </div>
     </section>
 
     <!-- CEVICHES -->
-    <section class="card menu-section">
+    <section class="card menu-section" data-category="ceviches">
       <div class="section-header orange">
         <h2>Ceviches</h2>
       </div>
       <div class="menu-items">
-        <div class="item featured">
+        <div class="item featured with-image" data-product='{"id":"ceviche-pescado","name":"Ceviche De Pescado","price":9900}'>
           <div class="item-info">
             <span class="item-name">Ceviche De Pescado</span>
             <p class="item-desc">Pescado marinado con limón sutil, acompañado de choclo, camote y cancha.</p>
             <strong class="item-price" data-price-id="ceviche-pescado">$9.900</strong>
           </div>
-        </div>
-        <div class="item featured">
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Ceviche de Pescado.png" alt="Ceviche De Pescado" loading="lazy">
+          </div>
+</div>
+        <div class="item featured" data-product='{"id":"pescado-camarones","name":"Pescado y Camarones","price":12900}'>
           <div class="item-info">
             <span class="item-name">Pescado y Camarones</span>
             <p class="item-desc">Pescado y camarones marinados en limón acompañado de choclo, camote y cancha.</p>
             <strong class="item-price" data-price-id="pescado-camarones">$12.900</strong>
           </div>
-        </div>
-        <div class="item featured">
-          <div class="item-info">
-            <span class="item-name">Ceviche Mixto</span>
-            <p class="item-desc">Pescado con pulpa, camarón, calamar marinados en limón, acompañado de choclo, camote y cancha.</p>
-            <strong class="item-price" data-price-id="ceviche-mixto">$13.500</strong>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
           </div>
         </div>
-        <div class="item featured">
+        <div class="item featured" data-product='{"id":"ceviche-mixto","name":"Ceviche Mixto","price":13500}'>
+          <div class="item-info">
+            <span class="item-name">Ceviche Mixto</span>
+            <p class="item-desc">Pescado con pulpo, camarón, calamar marinados en limón, acompañado de choclo, camote y cancha.</p>
+            <strong class="item-price" data-price-id="ceviche-mixto">$13.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item featured" data-product='{"id":"ceviche-cilantro","name":"Ceviche al Cilantro","price":11000}'>
           <div class="item-info">
             <span class="item-name">Ceviche al Cilantro</span>
-            <p class="item-desc">Filete de pescado cortados en cubos cilantro frescos (solo las hojas), licuado con un chorrito de caldo de pescado, zumo de limón de pika o sutil sal al gusto, ajos molido, ají o rocoto y pimienta.</p>
+            <p class="item-desc">Filete de pescado, cilantro, caldo de pescado, limón, ajos y especias.</p>
             <strong class="item-price" data-price-id="ceviche-cilantro">$11.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
           </div>
         </div>
       </div>
       <div class="section-image">
-        <img src="assets/ceviche.jpg" alt="Ceviche De Pescado">
+        <img src="assets/fondo2.png" alt="Ceviche De Pescado">
       </div>
     </section>
 
     <!-- CAUSAS -->
-    <section class="card menu-section">
+    <section class="card menu-section" data-category="causas">
       <div class="section-header">
         <h2>Causas</h2>
       </div>
       <div class="menu-items">
-        <div class="item">
+        <div class="item" data-product='{"id":"causa-camarones","name":"Causa de Camarones","price":9900}'>
           <div class="item-info">
             <span class="item-name">Causa de Camarones</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="causa-camarones">$9.900</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
-        <div class="item">
+        <div class="item" data-product='{"id":"causa-acevichada","name":"Causa Acevichada","price":8900}'>
           <div class="item-info">
             <span class="item-name">Causa Acevichada</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="causa-acevichada">$8.900</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
-        <div class="item">
+        <div class="item with-image" data-product='{"id":"causa-limena","name":"Causa Limeña","price":7000}'>
           <div class="item-info">
             <span class="item-name">Causa Limeña</span>
             <span class="item-dots"></span>
             <strong class="item-price" data-price-id="causa-limena">$7.000</strong>
           </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Causa Limeña.png" alt="Causa Limeña" loading="lazy">
+          </div>
+</div>
+      </div>
+    </section>
+
+    <!-- CRIOLLOS DEL PERÚ -->
+    <section class="card menu-section" data-category="criollos">
+      <div class="section-header orange">
+        <h2>Criollos del Perú</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item featured with-image" data-product='{"id":"lomo-saltado","name":"Lomo Saltado","price":11000}'>
+          <div class="item-info">
+            <span class="item-name">Lomo Saltado</span>
+            <p class="item-desc">Trozos de lomo de vacuno salteados con cebollas, tomates acompañado de arroz y papas fritas.</p>
+            <strong class="item-price" data-price-id="lomo-saltado">$11.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Lomo Saltado 2.png" alt="Lomo Saltado" loading="lazy">
+          </div>
+</div>
+        <div class="item featured with-image" data-product='{"id":"pollo-saltado","name":"Pollo Saltado","price":8500}'>
+          <div class="item-info">
+            <span class="item-name">Pollo Saltado</span>
+            <p class="item-desc">Trozos de filete de pollo salteados con cebollas, tomates, acompañado de arroz y papas fritas.</p>
+            <strong class="item-price" data-price-id="pollo-saltado">$8.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Pollo Saltado.png" alt="Pollo Saltado" loading="lazy">
+          </div>
+</div>
+        <div class="item featured with-image" data-product='{"id":"aji-gallina","name":"Ají de Gallina","price":8000}'>
+          <div class="item-info">
+            <span class="item-name">Ají de Gallina</span>
+            <p class="item-desc">Pechuga deshilachada en una salsa cremosa de ají peruano acompañado con papas cocidas y arroz.</p>
+            <strong class="item-price" data-price-id="aji-gallina">$8.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Ají de Gallina.png" alt="Ají de Gallina" loading="lazy">
+          </div>
+</div>
+        <div class="item with-image" data-product='{"id":"combinado","name":"Combinado","price":9000}'>
+          <div class="item-info">
+            <span class="item-name">Combinado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="combinado">$9.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Combinado.png" alt="Combinado" loading="lazy">
+          </div>
+</div>
+      </div>
+    </section>
+
+    <!-- SOPAS -->
+    <section class="card menu-section" data-category="sopas">
+      <div class="section-header">
+        <h2>Sopas</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"sudado-pescado","name":"Sudado de Pescado","price":9200}'>
+          <div class="item-info">
+            <span class="item-name">Sudado de Pescado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="sudado-pescado">$9.200</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"parihuela","name":"Parihuela","price":12000}'>
+          <div class="item-info">
+            <span class="item-name">Parihuela</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="parihuela">$12.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Parrihuela 2.png" alt="Parihuela" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"dieta-pollo","name":"Dieta de Pollo","price":5500}'>
+          <div class="item-info">
+            <span class="item-name">Dieta de Pollo</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="dieta-pollo">$5.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"chupe-camarones","name":"Chupe de Camarones","price":12900}'>
+          <div class="item-info">
+            <span class="item-name">Chupe de Camarones</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chupe-camarones">$12.900</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"chupe-mariscos","name":"Chupe de Mariscos","price":10500}'>
+          <div class="item-info">
+            <span class="item-name">Chupe de Mariscos</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chupe-mariscos">$10.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- PASTAS -->
+    <section class="card menu-section" data-category="pastas">
+      <div class="section-header orange">
+        <h2>Pastas</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"tallarin-pollo","name":"Tallarín Saltado de Pollo","price":8500}'>
+          <div class="item-info">
+            <span class="item-name">Tallarín Saltado de Pollo</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tallarin-pollo">$8.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"tallarin-carne","name":"Tallarín Saltado de Carne","price":10500}'>
+          <div class="item-info">
+            <span class="item-name">Tallarín Saltado de Carne</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tallarin-carne">$10.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Tallarin Saltado de Carne.png" alt="Tallarín Saltado de Carne" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"tallarin-mixto","name":"Tallarín Saltado Mixto","price":12500}'>
+          <div class="item-info">
+            <span class="item-name">Tallarín Saltado Mixto</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tallarin-mixto">$12.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"tallarin-3sabores","name":"Tallarín Saltado 3 Sabores","price":13800}'>
+          <div class="item-info">
+            <span class="item-name">Tallarín Saltado 3 Sabores</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tallarin-3sabores">$13.800</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"tallarin-mariscos","name":"Tallarín Saltado de Mariscos","price":12000}'>
+          <div class="item-info">
+            <span class="item-name">Tallarín Saltado de Mariscos</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tallarin-mariscos">$12.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FETUCCINI -->
+    <section class="card menu-section" data-category="fetuccini">
+      <div class="section-header">
+        <h2>Fetuccini</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"fetuccini-pollo","name":"Fetuccini a la Huancaina con Pollo Salteado","price":10500}'>
+          <div class="item-info">
+            <span class="item-name">Fetuccini a la Huancaina con Pollo Salteado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="fetuccini-pollo">$10.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"fetuccini-lomo","name":"Fetuccini a la Huancaina con Lomo Salteado","price":11500}'>
+          <div class="item-info">
+            <span class="item-name">Fetuccini a la Huancaina con Lomo Salteado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="fetuccini-lomo">$11.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Fetuchini con Lomo Saltado.png" alt="Fetuccini a la Huancaina con Lomo Salteado" loading="lazy">
+          </div>
+</div>
+        <div class="item with-image" data-product='{"id":"fetuccini-pesto","name":"Fetuccini al pesto c/n Pollo a la Plancha","price":8500}'>
+          <div class="item-info">
+            <span class="item-name">Fetuccini al pesto c/n Pollo a la Plancha</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="fetuccini-pesto">$8.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Tallarines con pesto.png" alt="Fetuccini al pesto" loading="lazy">
+          </div>
+</div>
+        <div class="item featured" data-product='{"id":"filete-fetuccini","name":"Filete con Fetuccini en salsa Huancaina","price":14900}'>
+          <div class="item-info">
+            <span class="item-name">Filete con Fetuccini en salsa Huancaina</span>
+            <p class="item-desc">Filete de vacuno a la plancha, sobre un nido de fetuccini, con una crema caliente a la huancaina.</p>
+            <strong class="item-price" data-price-id="filete-fetuccini">$14.900</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLLOS -->
+    <section class="card menu-section" data-category="pollos">
+      <div class="section-header orange">
+        <h2>Pollos</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"pollo-broaster","name":"Pollo Broaster","price":7000}'>
+          <div class="item-info">
+            <span class="item-name">Pollo Broaster</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pollo-broaster">$7.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"chicken-huanca","name":"Chicken Huanca","price":7000}'>
+          <div class="item-info">
+            <span class="item-name">Chicken Huanca</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chicken-huanca">$7.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"pasion-huanca","name":"Pasión Huanca","price":8500}'>
+          <div class="item-info">
+            <span class="item-name">Pasión Huanca</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pasion-huanca">$8.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"salchipapa","name":"Salchipapa","price":4000}'>
+          <div class="item-info">
+            <span class="item-name">Salchipapa</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="salchipapa">$4.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"chicharron-pollo","name":"Chicharron de Pollo con Papas Fritas","price":8000}'>
+          <div class="item-info">
+            <span class="item-name">Chicharron de Pollo con Papas Fritas</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chicharron-pollo">$8.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Chicharrón de Pollo.png" alt="Chicharron de Pollo" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"pollo-champinon","name":"Pollo a la plancha en salsa de Champiñon","price":8500}'>
+          <div class="item-info">
+            <span class="item-name">Pollo a la plancha en salsa de Champiñon</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pollo-champinon">$8.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"pechuga-plancha","name":"Pechuga a la Plancha","price":9000}'>
+          <div class="item-info">
+            <span class="item-name">Pechuga a la Plancha</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pechuga-plancha">$9.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LA CASA RECOMIENDA -->
+    <section class="card menu-section" data-category="casa-recomienda">
+      <div class="section-header">
+        <h2>La Casa Recomienda</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"chicharron-pescado","name":"Chicharrón de Pescado","price":8000}'>
+          <div class="item-info">
+            <span class="item-name">Chicharrón de Pescado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chicharron-pescado">$8.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"chicharron-calamar","name":"Chicharrón de Calamar","price":9000}'>
+          <div class="item-info">
+            <span class="item-name">Chicharrón de Calamar</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chicharron-calamar">$9.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"jalea-mixta","name":"Jalea Mixta","price":27000}'>
+          <div class="item-info">
+            <span class="item-name">Jalea Mixta</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="jalea-mixta">$27.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"jalea-especial","name":"Jalea Mixta Especial","price":35000}'>
+          <div class="item-info">
+            <span class="item-name">Jalea Mixta Especial</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="jalea-especial">$35.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"picante-mariscos","name":"Picante de Mariscos","price":9500}'>
+          <div class="item-info">
+            <span class="item-name">Picante de Mariscos</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="picante-mariscos">$9.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"pulpo-parrilla","name":"Pulpo a la Parrilla","price":13000}'>
+          <div class="item-info">
+            <span class="item-name">Pulpo a la Parrilla</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pulpo-parrilla">$13.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"trio-marino","name":"Trío Marino","price":28000}'>
+          <div class="item-info">
+            <span class="item-name">Trío Marino</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="trio-marino">$28.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"ronda-marina","name":"Ronda Marina","price":38000}'>
+          <div class="item-info">
+            <span class="item-name">Ronda Marina</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="ronda-marina">$38.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARROZ -->
+    <section class="card menu-section" data-category="arroz">
+      <div class="section-header orange">
+        <h2>Arroz</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"chaufa-pollo","name":"Arroz Chaufa Pollo","price":8000}'>
+          <div class="item-info">
+            <span class="item-name">Arroz Chaufa Pollo</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chaufa-pollo">$8.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"chaufa-carne","name":"Arroz Chaufa de Carne","price":10500}'>
+          <div class="item-info">
+            <span class="item-name">Arroz Chaufa de Carne</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chaufa-carne">$10.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Arroz Chaufa de Carne.png" alt="Arroz Chaufa de Carne" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"chaufa-mariscos","name":"Arroz Chaufa de Mariscos","price":11500}'>
+          <div class="item-info">
+            <span class="item-name">Arroz Chaufa de Mariscos</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chaufa-mariscos">$11.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"chaufa-mixto","name":"Arroz Chaufa Mixto","price":12500}'>
+          <div class="item-info">
+            <span class="item-name">Arroz Chaufa Mixto</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chaufa-mixto">$12.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"chaufa-3sabores","name":"Arroz Chaufa 3 Sabores","price":13500}'>
+          <div class="item-info">
+            <span class="item-name">Arroz Chaufa 3 Sabores</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chaufa-3sabores">$13.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"chaufa-camarones","name":"Arroz Chaufa Camarones","price":13500}'>
+          <div class="item-info">
+            <span class="item-name">Arroz Chaufa Camarones</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chaufa-camarones">$13.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"arroz-mariscos","name":"Arroz con Mariscos","price":11000}'>
+          <div class="item-info">
+            <span class="item-name">Arroz con Mariscos</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="arroz-mariscos">$11.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Arroz con marisco.png" alt="Arroz con Mariscos" loading="lazy">
+          </div>
+</div>
+      </div>
+    </section>
+
+    <!-- AEROPUERTO -->
+    <section class="card menu-section" data-category="aeropuerto">
+      <div class="section-header">
+        <h2>Aeropuerto</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"aeropuerto-pollo","name":"Aeropuerto de Pollo","price":9000}'>
+          <div class="item-info">
+            <span class="item-name">Aeropuerto de Pollo</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="aeropuerto-pollo">$9.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"aeropuerto-carne","name":"Aeropuerto de Carne","price":11500}'>
+          <div class="item-info">
+            <span class="item-name">Aeropuerto de Carne</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="aeropuerto-carne">$11.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"aeropuerto-3sabores","name":"Aeropuerto 3 Sabores","price":13800}'>
+          <div class="item-info">
+            <span class="item-name">Aeropuerto 3 Sabores</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="aeropuerto-3sabores">$13.800</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RISOTTO -->
+    <section class="card menu-section" data-category="risotto">
+      <div class="section-header orange">
+        <h2>Risotto</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"risotto-pollo","name":"Risotto Pollo Salteado","price":10500}'>
+          <div class="item-info">
+            <span class="item-name">Risotto Pollo Salteado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="risotto-pollo">$10.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"risotto-lomo","name":"Risotto Lomo Salteado","price":11500}'>
+          <div class="item-info">
+            <span class="item-name">Risotto Lomo Salteado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="risotto-lomo">$11.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Risoto con Lom Saltado.png" alt="Risotto Lomo Salteado" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"risotto-camarones","name":"Risotto con Camarones","price":13500}'>
+          <div class="item-info">
+            <span class="item-name">Risotto con Camarones</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="risotto-camarones">$13.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"risotto-mariscos","name":"Risotto con Mariscos","price":11000}'>
+          <div class="item-info">
+            <span class="item-name">Risotto con Mariscos</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="risotto-mariscos">$11.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TACU-TACU -->
+    <section class="card menu-section" data-category="tacu-tacu">
+      <div class="section-header">
+        <h2>Tacu-Tacu</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item with-image" data-product='{"id":"tacutacu-lomo","name":"Tacu tacu con Lomo salteado","price":11000}'>
+          <div class="item-info">
+            <span class="item-name">Tacu tacu con Lomo salteado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tacutacu-lomo">$11.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Tacu tacu con Lomo Saltado.png" alt="Tacu tacu con Lomo salteado" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"tacutacu-pollo","name":"Tacu tacu con Pollo Salteado","price":9000}'>
+          <div class="item-info">
+            <span class="item-name">Tacu tacu con Pollo Salteado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tacutacu-pollo">$9.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"tacutacu-camarones","name":"Tacu tacu con Camarones","price":13000}'>
+          <div class="item-info">
+            <span class="item-name">Tacu tacu con Camarones</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tacutacu-camarones">$13.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"tacutacu-macho","name":"Tacu tacu A lo Macho","price":13800}'>
+          <div class="item-info">
+            <span class="item-name">Tacu tacu A lo Macho</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tacutacu-macho">$13.800</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PESCADOS -->
+    <section class="card menu-section" data-category="pescados">
+      <div class="section-header orange">
+        <h2>Pescados</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item with-image" data-product='{"id":"pescado-camarones-salsa","name":"Pescado en Salsa de Camarones","price":13000}'>
+          <div class="item-info">
+            <span class="item-name">Pescado en Salsa de Camarones</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pescado-camarones-salsa">$13.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Pescado en Salsa de Camarones.png" alt="Pescado en Salsa de Camarones" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"pescado-mariscos-salsa","name":"Pescado en Salsa de Mariscos","price":14500}'>
+          <div class="item-info">
+            <span class="item-name">Pescado en Salsa de Mariscos</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pescado-mariscos-salsa">$14.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"pescado-ajo","name":"Pescado en Salsa de Ajo","price":10500}'>
+          <div class="item-info">
+            <span class="item-name">Pescado en Salsa de Ajo</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pescado-ajo">$10.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Pescado en Salsa de Ajo.png" alt="Pescado en Salsa de Ajo" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"pescado-plancha","name":"Pescado A la Plancha","price":8900}'>
+          <div class="item-info">
+            <span class="item-name">Pescado A la Plancha</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pescado-plancha">$8.900</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"pescado-frito","name":"Pescado Frito","price":8000}'>
+          <div class="item-info">
+            <span class="item-name">Pescado Frito</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="pescado-frito">$8.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Pescado Frito.png" alt="Pescado Frito" loading="lazy">
+          </div>
+</div>
+      </div>
+    </section>
+
+    <!-- FILETES -->
+    <section class="card menu-section" data-category="filetes">
+      <div class="section-header">
+        <h2>Filetes</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"filete-lomo-camarones","name":"Filete de Lomo en Salsa de Camarones","price":13800}'>
+          <div class="item-info">
+            <span class="item-name">Filete de Lomo en Salsa de Camarones</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="filete-lomo-camarones">$13.800</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item with-image" data-product='{"id":"filete-mignon","name":"Filete Mignon","price":12500}'>
+          <div class="item-info">
+            <span class="item-name">Filete Mignon</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="filete-mignon">$12.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Filete Mignon.png" alt="Filete Mignon" loading="lazy">
+          </div>
+</div>
+        <div class="item with-image" data-product='{"id":"filete-mar-tierra","name":"Filete Mar y Tierra","price":14500}'>
+          <div class="item-info">
+            <span class="item-name">Filete Mar y Tierra</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="filete-mar-tierra">$14.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        
+          <div class="item-image">
+            <img src="assets/Filete Mar y Tierra.png" alt="Filete Mar y Tierra" loading="lazy">
+          </div>
+</div>
+        <div class="item" data-product='{"id":"chorrillana-filete","name":"Chorrillana de Filete","price":13000}'>
+          <div class="item-info">
+            <span class="item-name">Chorrillana de Filete</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="chorrillana-filete">$13.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VEGETARIANO -->
+    <section class="card menu-section" data-category="vegetariano">
+      <div class="section-header orange">
+        <h2>Vegetariano</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"tofu-salteado","name":"Tofu Salteado","price":8500}'>
+          <div class="item-info">
+            <span class="item-name">Tofu Salteado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tofu-salteado">$8.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"tallarin-vegetariano","name":"Tallarín vegetariano","price":8000}'>
+          <div class="item-info">
+            <span class="item-name">Tallarín vegetariano</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tallarin-vegetariano">$8.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"tallarin-tofu","name":"Tallarín Salteado de Tofu","price":8500}'>
+          <div class="item-info">
+            <span class="item-name">Tallarín Salteado de Tofu</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tallarin-tofu">$8.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"ceviche-champinon","name":"Ceviche de Champiñon","price":8900}'>
+          <div class="item-info">
+            <span class="item-name">Ceviche de Champiñon</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="ceviche-champinon">$8.900</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"causa-vegetariana","name":"Causa Vegetariana","price":8000}'>
+          <div class="item-info">
+            <span class="item-name">Causa Vegetariana</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="causa-vegetariana">$8.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"tortilla-verduras","name":"Tortilla de Verduras","price":8000}'>
+          <div class="item-info">
+            <span class="item-name">Tortilla de Verduras</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="tortilla-verduras">$8.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"arroz-vegetariano","name":"Arroz Salteado Vegetariano","price":7000}'>
+          <div class="item-info">
+            <span class="item-name">Arroz Salteado Vegetariano</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="arroz-vegetariano">$7.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"fetuccini-champinon","name":"Fetuccini a la Huancaina con Champiñon Salteado","price":8500}'>
+          <div class="item-info">
+            <span class="item-name">Fetuccini a la Huancaina con Champiñon Salteado</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="fetuccini-champinon">$8.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AGREGADOS -->
+    <section class="card menu-section" data-category="agregados">
+      <div class="section-header">
+        <h2>Agregados</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"cancha","name":"Cancha","price":2500}'>
+          <div class="item-info">
+            <span class="item-name">Cancha</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="cancha">$2.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"choclo","name":"Choclo","price":2500}'>
+          <div class="item-info">
+            <span class="item-name">Choclo</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="choclo">$2.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"papas-grande","name":"Papas fritas (grande)","price":3400}'>
+          <div class="item-info">
+            <span class="item-name">Papas fritas (grande)</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="papas-grande">$3.400</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"papas-chica","name":"Papas fritas (chica)","price":2500}'>
+          <div class="item-info">
+            <span class="item-name">Papas fritas (chica)</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="papas-chica">$2.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"arroz-agregado","name":"Arroz","price":1500}'>
+          <div class="item-info">
+            <span class="item-name">Arroz</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="arroz-agregado">$1.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"ensalada-surtida","name":"Ensalada surtida","price":2500}'>
+          <div class="item-info">
+            <span class="item-name">Ensalada surtida</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="ensalada-surtida">$2.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"ensalada-palta","name":"Ensalada Palta Tomate","price":4500}'>
+          <div class="item-info">
+            <span class="item-name">Ensalada Palta Tomate</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="ensalada-palta">$4.500</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"ensalada-criolla","name":"Ensalada Criolla","price":3000}'>
+          <div class="item-info">
+            <span class="item-name">Ensalada Criolla</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="ensalada-criolla">$3.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"camote","name":"Camote","price":1800}'>
+          <div class="item-info">
+            <span class="item-name">Camote</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="camote">$1.800</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POSTRES -->
+    <section class="card menu-section" data-category="postres">
+      <div class="section-header orange">
+        <h2>Postres</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item featured" data-product='{"id":"suspiro-limeno","name":"Suspiro Limeño","price":4000}'>
+          <div class="item-info">
+            <span class="item-name">Suspiro Limeño</span>
+            <p class="item-desc">El nombre de este postre deriva de su dulzura y suavidad, comparada al suspiro que emiten las damiselas limeñas.</p>
+            <strong class="item-price" data-price-id="suspiro-limeno">$4.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"mousse-maracuya","name":"Mousse de Maracuya","price":4000}'>
+          <div class="item-info">
+            <span class="item-name">Mousse de Maracuya</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="mousse-maracuya">$4.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"leche-asada","name":"Leche Asada","price":4000}'>
+          <div class="item-info">
+            <span class="item-name">Leche Asada</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="leche-asada">$4.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEBIDAS CALIENTES -->
+    <section class="card menu-section" data-category="bebidas">
+      <div class="section-header">
+        <h2>Bebidas Calientes</h2>
+      </div>
+      <div class="menu-items">
+        <div class="item" data-product='{"id":"cafe","name":"Café (Nescafe)","price":1200}'>
+          <div class="item-info">
+            <span class="item-name">Café (Nescafe)</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="cafe">$1.200</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"manzanilla","name":"Manzanilla","price":1200}'>
+          <div class="item-info">
+            <span class="item-name">Manzanilla</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="manzanilla">$1.200</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"infusiones","name":"Infusiones","price":1200}'>
+          <div class="item-info">
+            <span class="item-name">Infusiones</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="infusiones">$1.200</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+        <div class="item" data-product='{"id":"te","name":"Té","price":1000}'>
+          <div class="item-info">
+            <span class="item-name">Té</span>
+            <span class="item-dots"></span>
+            <strong class="item-price" data-price-id="te">$1.000</strong>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn buy-btn">Comprar</button>
+            <button class="action-btn cart-btn">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓDIGO QR -->
+    <section class="qr-section">
+      <div class="qr-container">
+        <h2 class="qr-title">Escanéame</h2>
+        <p class="qr-subtitle">Abre el menú en tu celular</p>
+        <div class="qr-wrapper">
+          <div id="qrcode"></div>
+        </div>
+        <p class="qr-url">Rinconcito Huancaino</p>
+        <button class="qr-enlarge-btn" id="qrEnlargeBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+          Ver grande
+        </button>
+      </div>
+    </section>
+
+    <!-- MODAL QR GRANDE (para imprimir/screenshot) -->
+    <div class="qr-modal-overlay" id="qrModalOverlay">
+      <div class="qr-modal">
+        <button class="qr-modal-close" id="qrModalClose">✕</button>
+        <h3 class="qr-modal-title">Rinconcito Huancaíno</h3>
+        <div class="qr-modal-code">
+          <div id="qrcode-large"></div>
+        </div>
+        <p class="qr-modal-url">rinconcitohuancaino.github.io</p>
+        <p class="qr-modal-hint">Toma screenshot para imprimir</p>
+      </div>
+    </div>
+
   </main>
 
-  <!-- Firebase SDK -->
   <script type="module">
-    // Configuración de Firebase
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDHacFYORJovCmxBU2o4nXE53f1jiAyM",
-      authDomain: "menu-virtual-cdcb5.firebaseapp.com",
-      projectId: "menu-virtual-cdcb5",
-      storageBucket: "menu-virtual-cdcb5.firebasestorage.app",
-      messagingSenderId: "106795605897",
-      appId: "1:106795605897:web:7f706743a05ba69e536648",
-      measurementId: "G-YBFKM4ZHYG"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyDHacFYORJovCmxBU2o4nXE53f1jiAyM",
+    authDomain: "menu-virtual-cdcb5.firebaseapp.com",
+    projectId: "menu-virtual-cdcb5",
+    storageBucket: "menu-virtual-cdcb5.firebasestorage.app",
+    messagingSenderId: "106795605897",
+    appId: "1:106795605897:web:7f706743a05ba69e536648",
+    measurementId: "G-YBFKM4ZHYG"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    // Cargar precios desde Firebase
-    async function cargarPrecios() {
-      try {
-        const docRef = doc(db, 'menu', 'precios');
-        const docSnap = await getDoc(docRef);
-        
-        if (docSnap.exists()) {
-          const precios = docSnap.data();
-          
-          // Actualizar todos los precios en el DOM
-          document.querySelectorAll('[data-price-id]').forEach(el => {
-            const id = el.getAttribute('data-price-id');
-            if (precios[id]) {
-              el.textContent = '$' + precios[id];
-            }
-          });
-        }
-      } catch (error) {
-        console.log('Usando precios por defecto');
-      }
+  function normalizePrice(value) {
+    if (typeof value === "string") {
+      return parseInt(value.replace(/[^\d]/g, "") || "0", 10);
     }
+    if (typeof value === "number") {
+      if (value > 0 && value < 1000 && !Number.isInteger(value)) {
+        return Math.round(value * 1000);
+      }
+      return Math.round(value);
+    }
+    return 0;
+  }
 
-    // Cargar precios al inicio
-    cargarPrecios();
+  function formatPriceCLP(price) {
+    return "$" + Number(price).toLocaleString("es-CL");
+  }
+
+  async function cargarPrecios() {
+    try {
+      const docRef = doc(db, "menu", "precios");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const precios = docSnap.data();
+        document.querySelectorAll("[data-price-id]").forEach(el => {
+          const id = el.getAttribute("data-price-id");
+          if (precios[id] !== undefined) {
+            const price = normalizePrice(precios[id]);
+            el.textContent = formatPriceCLP(price);
+            const itemEl = el.closest(".item");
+            if (itemEl) {
+              const productData = JSON.parse(itemEl.dataset.product);
+              productData.price = price;
+              itemEl.dataset.product = JSON.stringify(productData);
+            }
+          }
+        });
+      }
+    } catch (e) {
+      console.log("Usando precios por defecto");
+    }
+  }
+
+  cargarPrecios();
+</script>
+
+  <!-- Librería QR Code (sin depender de servidores externos, es self-contained) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    // URL del menú
+    const QR_URL = "https://amarcelorojas.github.io/rinconcitohuancaino.github.io/#menu";
+
+    // QR pequeño (en el menú)
+    new QRCode(document.getElementById("qrcode"), {
+      text: QR_URL,
+      width: 200,
+      height: 200,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // QR grande (modal para imprimir)
+    new QRCode(document.getElementById("qrcode-large"), {
+      text: QR_URL,
+      width: 300,
+      height: 300,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Modal QR grande
+    document.getElementById("qrEnlargeBtn").addEventListener("click", () => {
+      document.getElementById("qrModalOverlay").classList.add("active");
+    });
+    document.getElementById("qrModalClose").addEventListener("click", () => {
+      document.getElementById("qrModalOverlay").classList.remove("active");
+    });
+    document.getElementById("qrModalOverlay").addEventListener("click", (e) => {
+      if (e.target === document.getElementById("qrModalOverlay")) {
+        document.getElementById("qrModalOverlay").classList.remove("active");
+      }
+    });
   </script>
 
   <script src="js/app.js"></script>
